@@ -1,0 +1,77 @@
+#pragma warning(disable:4996)
+#include <stdio.h> 
+#include <string.h>
+#include <stdlib.h>
+
+struct word // 구조체 선언  
+{
+	char letters[21]; // 비교할 단어 
+	int count; // Counting
+};
+
+int main()
+{
+	struct word* k = NULL;
+	char** p = NULL, tmp[501], eng[21], maxeng[21];
+	int N, i, j, cnt = 0, s = 0, h = 0, max = 0, line, l;
+
+	scanf("%d", &N);
+	getchar();
+
+	p = (char**)malloc(N * sizeof(char*)); // 메모리 할당 
+	
+	for (i = 0; i < N; i++){
+		gets(tmp); //임시로 문자 입력
+		p[i] = (char*)malloc((strlen(tmp) + 1) * sizeof(char));
+		strcpy(p[i], tmp); // 임시변수로 붙여넣기
+	}
+
+	for (i = 0; i < N; i++){
+		s = 0; 
+		cnt = 0;
+		
+		for (j = 0; j < strlen(p[i]) + 1; j++) {
+			if (p[i][j] == ' ' || p[i][j] == '\0') // 문자가 ' ' 이거나  '\0' 이면 cnt++ 
+				cnt++;
+		}
+
+		k = (struct word*)malloc(cnt * sizeof(struct word)); // 동적할당  
+		for (j = 0; j < strlen(p[i]) + 1; j++) {
+			if (p[i][j] == ' ' || p[i][j] == '\0') { // 단어 저장 조건 
+				eng[h] = '\0'; // 원하는 것만 저장하기 위해 
+				strcpy(k[s++].letters, eng); // 복사하기
+				h = 0; 
+			}
+			else{
+				if (p[i][j] >= 'A' && p[i][j] <= 'Z') // 대문자를 소문자로 저장  
+					eng[h++] = p[i][j] + 32;
+				else if (p[i][j] >= 'a' && p[i][j] <= 'z') // 소문자는 그대로 저장  
+					eng[h++] = p[i][j];
+				else if (p[i][j] <= '9' && p[i][j] >= '0') { //숫자도 그대로 저장
+					eng[h++] = p[i][j];
+				}
+			}
+		}
+		for (j = 0; j < cnt; j++){
+			k[j].count = 0; //구조체 count 0으로 초기화
+			for (l = 0; l < cnt; l++){
+				if (strcmp(k[j].letters, k[l].letters) == 0) //단어가 같으면 counting
+					k[j].count++;
+			}
+		}
+		for (j = 0; j < cnt; j++) { //단어 체크
+			if (k[j].count > max) { // max 보다 크다면 
+				max = k[j].count; // count 저장 
+				line = i; // 몇번째 줄인지 저장  
+				strcpy(maxeng, k[j].letters); // 해당 단어 저장  
+			}
+		}
+		free(k); // 메모리 해제  
+	}
+	printf(" %d %d %s", line, max, maxeng); // 결과 출력  
+
+	for (i = 0; i < N; i++) //메모리 해제  
+		free(p[i]);
+
+	free(p); //메모리 해제  
+}

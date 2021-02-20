@@ -1,0 +1,34 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int N;
+	float max;
+	float* p = NULL;
+
+	scanf("%d", &N);
+
+	p = (float*)malloc(N * sizeof(float));
+
+	if (p == NULL)
+		return -1;
+
+	for (int i = 0; i < N; i++) {
+		scanf("%f", p + i);
+		
+	}
+
+	max = *p;
+	for (int i = 0; i < N; i++) {
+		if (max < *(p + i))
+			max = *(p + i);
+	}
+
+	printf("%.2f", max);
+
+
+	free(p);
+
+	return 0;
+}

@@ -1,0 +1,43 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+
+int max(int *ar);
+int min(int* ar2);
+int main() {
+	int N = 0, arr[100], cnt = 0;
+	int* p, * sp = arr;
+
+	scanf("%d", &N);
+
+	for (p = arr; cnt != N; p++) {
+		scanf("%d", p);
+		if (*p == 0)
+			cnt++;
+	}
+
+	for (p = arr, cnt = 0; cnt != N; p++) {
+		if (*p == 0) {
+			printf("%d %d\n", max(sp), min(sp));
+			sp = p + 1;
+			cnt++;
+		}
+	}
+
+	return 0;
+}
+int max(int* ar) {
+	int max = *ar, * p;
+	for (p = ar; *p != 0; p++) {
+		if (max < *p)
+			max = *p;
+	}
+	return max;
+}
+int min(int* ar2) {
+	int min = *ar2, * p;
+	for (p = ar2; *p != 0; p++) {
+		if (min > *p)
+			min = *p;
+	}
+	return min;
+}

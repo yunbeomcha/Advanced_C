@@ -1,0 +1,300 @@
+1-1
+
+struct student_info {
+	char name[11];
+	int test1, test2;
+	double avg;
+};
+
+void insertData(struct student_info *s, int N);
+void printResult(struct student_info *s, int N, int N1, int N2);
+
+int main() {
+	int N, N1, N2;
+	scanf("%d %d %d", &N, &N1, &N2);
+	getchar();
+	struct student_info s[100];
+
+	insertData(s, N);
+	printResult(s, N, N1, N2);
+
+	return 0;
+}
+
+void insertData(struct student_info *s, int N) {
+	struct student_info *p;
+	for (p = s; p < s + N; p++) {
+		scanf("%s %d %d", p->name, &p->test1, &p->test2);
+		p->avg = (p->test1 + p->test2) / 2;
+	}
+}
+
+void printResult(struct student_info *s, int N, int N1, int N2) {
+	struct student_info *p;
+	for (p = s; p < s + N; p++) {
+		if (p->test1 <= N1) {
+			printf("%s %d %d\n", p->name, p->test1, p->test2);
+		}
+		else if (p->test2 <= N2) {
+			printf("%s %d %d\n", p->name, p->test1, p->test2);
+		}
+	}
+}
+
+
+
+1-2
+struct student_info {
+	char name[11];
+	int test1, test2;
+	double avg;
+};
+
+void insertData(struct student_info *s, int N);
+double getAllavg(struct student_info s[], int N);
+void printResult(struct student_info *s, int N, double avg);
+
+int main() {
+	int N;
+	scanf("%d",&N);
+	getchar();
+	struct student_info s[100];
+
+	insertData(s, N);
+	double tmp = getAllavg(s, N);
+	printResult(s, N, tmp);
+
+	return 0;
+}
+
+void insertData(struct student_info *s, int N) {
+	struct student_info *p;
+	for (p = s; p < s + N; p++) {
+		scanf("%s %d %d", p->name, &p->test1, &p->test2);
+		getchar();
+		p->avg = (p->test1)*0.4 + (p->test2)*0.6;
+	}
+}
+
+double getAllavg(struct student_info s[], int N) {
+	double total = 0, total_avg;
+	struct student_info *p;
+	for (p = s; p < s + N; p++) {
+		total += p->avg;
+	}
+	total_avg = total / N;
+	int count = 0;
+	for (p = s; p < s + N; p++) {
+		if (p->avg <= total_avg) {
+			count++;
+		}
+	}
+	printf("%.2lf %d\n", total_avg, count);
+	return total_avg;
+}
+
+void printResult(struct student_info *s, int N, double avg) {
+	struct student_info *p;
+	for (p = s; p < s + N; p++) {
+		if (p->avg <= avg) {
+			printf("%s %.2lf\n", p->name, p->avg);
+		}
+	}
+}
+
+
+2-1
+int check_u(char *p, char *q);
+
+int main() {
+	int N, M1, M2, answer;
+	scanf("%d", &N);
+	scanf("%d %d", &M1, &M2);
+	getchar();
+	char str[101];
+	for (int i = 0; i < N; i++) {
+		gets(str);
+		int len = strlen(str);
+		if (M2 > len) {
+			answer = check_u(str + M1, str + len);
+		}
+		else
+			answer = check_u(str + M1, str + M2);
+
+		if (answer > 0)
+			printf("%d\n", answer);
+	}
+	return 0;
+}
+
+int check_u(char *p, char *q) {
+	int count = 0;
+	char *r;
+	for (r = p; r <= q; r++) {
+		if (*r >= 'A' && *r <= 'Z') {
+			count++;
+		}
+	}
+	if (count > 0)
+		return count;
+	else
+		return 0;
+}
+
+
+2-2
+int check_u(char *p, char *q);
+
+int main() {
+	int N, M1, M2, cnt, min=100;
+	int max_len=0;
+	scanf("%d", &N);
+	scanf("%d %d", &M1, &M2);
+	getchar();
+
+	char str[101];
+	char answer[101];
+	for (int i = 0; i < N; i++) {
+		gets(str);
+		int len = strlen(str);
+		if (M2 > len) {
+			cnt = check_u(str + M1, str + len);
+		}
+		else
+			cnt = check_u(str + M1, str + M2);
+
+		if (cnt < min && cnt != 0) {
+			min = cnt;
+			strcpy(answer, str);
+			max_len = len;
+			
+		}
+		else if (cnt == min && cnt!=0) {
+			if (len > max_len) {
+				max_len = len;
+				strcpy(answer, str);
+			}
+			else if (len == max_len) {
+				strcpy(answer, str);
+			}
+		}
+	}
+	printf("%s", answer);
+
+	return 0;
+}
+
+int check_u(char *p, char *q) {
+	int count = 0;
+	char *r;
+	for (r = p; r <= q; r++) {
+		if (*r >= 'A' && *r <= 'Z') {
+			count++;
+		}
+	}
+	return count;
+}
+
+
+4-1
+int num_of_divisors(int M, int *arr);
+
+int main() {
+	int M;
+	int*arr;
+	scanf("%d", &M);
+
+	arr = (int*)malloc(20 * sizeof(int));
+	if (arr == NULL) {
+		printf("ERROR");
+		return -2;
+	}
+
+	int count = num_of_divisors(M, arr);
+	if (count == -1) {
+		printf("none");
+	}
+	else {
+		for (int i = count - 1; i >= 0; i--) {
+			printf("%d ", *(arr + i));
+		}
+	}
+
+
+	return 0;
+}
+
+int num_of_divisors(int M, int *arr) {
+	int m = 0;
+	for (int i = 1; i <= M; i++) {
+		if (M%i == 0) {
+			*(arr+m) = i;
+			m++;
+		}
+	}
+	if (m <= 19)
+		return m;
+	else
+		return -1;
+}
+
+
+5-1
+typedef struct job {
+	char *name; // 작업명 (공백 없이 최대 100자)
+	char *start; // 작업 시작 시간 (HH:MM:SS; 24시간제 시간,분,초 예)15:32:35)
+	char *end; // 작업 종료 시간 (위와 동일)
+	int money; // 작업 대금 (수익)
+}ABC;
+
+int main() {
+	int N;
+	scanf("%d", &N);
+	getchar();
+
+	ABC *job;
+	ABC tmp;
+	char tmp_name[101];
+	char tmp_start[9], tmp_end[9];
+	job = (ABC*)malloc(N * sizeof(ABC));
+	if (job == NULL) {
+		printf("ERROR");
+		return -1;
+	}
+
+	for (int i = 0; i < N; i++) {
+		scanf("%s %s %s %d", tmp_name, tmp_start, tmp_end, &(job + i)->money);
+		int len1 = strlen(tmp_name) + 1;
+		int len2 = strlen(tmp_start) + 1;
+		int len3 = strlen(tmp_end) + 1;
+
+		(job+i)->name = (char*)malloc(len1 * sizeof(char));
+		(job + i)->start = (char*)malloc(len2 * sizeof(char));
+		(job + i)->end = (char*)malloc(len3 * sizeof(char));
+
+		strcpy((job + i)->name, tmp_name);
+		strcpy((job + i)->start, tmp_start);
+		strcpy((job + i)->end, tmp_end);
+	}
+	
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N - i - 1; j++) {
+			if (strcmp((job + j)->start, (job + j + 1)->start) > 0) {
+				tmp = *(job + j);
+				*(job + j) = *(job + j + 1);
+				*(job + j + 1) = tmp;
+			}
+		}
+	}
+
+	printf("%s %s %s %d", job[0].name, job[0].start, job[0].end, job[0].money);
+
+	for (int i = 0; i < N; i++) {
+		free((job + i)->name);
+		free((job + i)->start);
+		free((job + i)->end);
+	}
+	free(job);
+
+	return 0;
+}

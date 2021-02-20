@@ -1,0 +1,61 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+
+void input(char* p, int N);
+void charoutput(char* p, int N);
+void lower(char* p, int N);
+void intsum(char* p, int N);
+
+int main() {
+	int N = 0;
+	char arr[100], * i = NULL;
+
+	scanf("%d", &N);
+	getchar();
+
+	input(arr, N);
+
+	charoutput(arr, N);
+
+	intsum(arr, N);
+
+	return 0;
+}
+
+void input(char* p, int N) {
+	char* i = NULL;
+
+	for (i = p; i < p + N; i++) {
+		scanf("%c", i);
+	}
+	getchar();
+}
+void charoutput(char* p, int N) {
+	char* i = NULL;
+
+	for (i = p; i < p + N; i++) {
+		if (*i >= 'A' && *i <= 'z') {
+			printf("%c", *i);
+		}
+	}
+	printf("\n");
+}
+void intsum(char* p, int N) {
+	int sum = 0, num = 0;
+	int temp = 0;
+	int tmp = 0;
+	int cnt = 0;
+	char* i = NULL;
+	for (i = p; i < p + N + 1; i++) {
+		if (*i >= '0' && *i <= '9') {
+			sum = sum + (*i - '0');
+			sum *= 10;
+		}
+		else {
+			sum /= 10;
+			num += sum;
+			sum = 0;
+		}
+	}
+	printf("%d", num);
+}

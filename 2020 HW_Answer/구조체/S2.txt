@@ -1,0 +1,41 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <string.h>
+struct _bank {
+	int id; //아이디
+	int arrival_time; //도착 시간
+	int service_time; //서비스 시간
+	int waiting_time; //대기시간
+};
+void waitingtime(struct _bank guest[], int N) {
+	int i, waiting_sum = 0; //대기시간 누적 변수
+	
+	for (i = 0; i < N; i++) {
+		waiting_sum += guest[i].service_time; //서비스 타임을 waiting_sum을 누적
+		guest[N].arrival_time = 0; //arrive_time 마지막 배열값을 초기화
+		guest[i].waiting_time = waiting_sum - guest[i+1].arrival_time; //멤버변수 waiting_time에 저장
+	}
+	guest[N - 1].waiting_time = 0; //마지막으로 누적한 waiting_time을 0으로 초기화
+}
+double avgtime(struct _bank guest[], int N) {
+	int i;
+	double sum = 0.0, avg_time = 0.0;
+	for (i = 0; i < N; i++) {
+		sum += guest[i].waiting_time; //waiting_time의 총 합
+	}
+	avg_time = sum / (double)N; //총 합을 인원만큼 나눠서
+	return avg_time; // 평균값 리턴
+}
+int main(void) {
+	struct _bank p[100];
+	int i, j, n, wating[100], sum = 0;
+	double avg_time;
+	scanf("%d", &n);
+	for (i = 0; i < n; i++) {
+		scanf("%d %d %d", &p[i].id, &p[i].arrival_time, &p[i].service_time);
+	} //인원수(n)만큼 id, arrival_time, service_time 입력
+	waitingtime(p, n); //waitingtime 함수
+	avg_time = avgtime(p, n); //avgtime으로 평균값 avg_time에 저장
+	printf("%.2lf\n", avg_time); //평균 대기시간 출력
+	return 0;
+}

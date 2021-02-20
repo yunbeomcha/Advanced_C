@@ -1,0 +1,21 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+
+int main() {
+	char str[100], temp[101] = { 0 };
+	int len = 0;
+
+	scanf("%s", str);
+
+	len = strlen(str);
+	for (int i = len; i > 0; i--) {
+		printf("%s\n", str);
+		for (int j = 0; j < len; j++) {
+			str[len] = NULL;
+			temp[j] = str[len-1];
+			str[len-1] = str[len - 1 - j];
+			str[len -1 - j] = temp[j];
+		}
+	}
+	return 0;
+}

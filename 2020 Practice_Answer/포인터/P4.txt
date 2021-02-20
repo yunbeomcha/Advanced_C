@@ -1,0 +1,36 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+
+int main() {
+	int x[3], * p = x, * mid_index;
+
+	for (p = x; p < x + 3; p++) {
+		scanf("%d", p);
+	} //ex 1,9,7
+	if (*x > * (x + 1)) { //1>9
+		if (*x < *(x + 2)) { //1<7
+			mid_index = x;
+		}
+		else {
+			if (*(x + 1) < *(x + 2)) {
+				mid_index = x + 2;
+			}
+			else
+				mid_index = x + 1;
+		}
+	}
+	else { //1<9
+		if (*x > * (x + 2)) {
+			mid_index = x;
+		}
+		else {
+			if (*(x + 1) > * (x + 2)) {
+				mid_index = x + 2;
+			}
+			else
+				mid_index = x + 1;
+		}
+	}
+	printf("%d", *mid_index);
+	return 0;
+}

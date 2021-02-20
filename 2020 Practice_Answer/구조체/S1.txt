@@ -1,0 +1,17 @@
+#pragma warning(disable:4996)
+#include<stdio.h>
+#include<string.h>
+struct vec{
+	int x1, y1, z1;
+};
+int main() {
+	struct vec v1, v2;
+	int sum;
+	scanf("%d %d %d", &v1.x1, &v1.y1, &v1.z1);
+	scanf("%d %d %d", &v2.x1, &v2.y1, &v2.z1);
+
+	struct vec v3 = { v1.x1 * v2.x1, v1.y1 * v2.y1, v1.z1 * v2.z1 };
+	sum = v3.x1 + v3.y1 + v3.z1;
+	printf("%d %d %d\n%d", v3.x1, v3.y1, v3.z1, sum);
+	return 0;
+}

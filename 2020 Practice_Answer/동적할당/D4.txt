@@ -1,0 +1,46 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int N = 0;
+	int col = 0, row = 0;
+	int cnt = 0;
+	char temp = 'a';
+	char** p = NULL;
+	scanf("%d %d", &row, &col);
+	p = (char**)malloc(col * sizeof(char*));
+	for (int i = 0; i < col; i++) {
+		p[i] = (char*)malloc(row * sizeof(char));
+	}
+	if (p == NULL) {
+		return -1;
+	}
+	for (int i = 0; i < col; i++) {
+		for (int j = 0; j < row; j++) {
+			p[i][j] = temp++;
+			if (temp == 'z' + 1) {
+				temp = 'A';
+			}
+			else if (temp == 'Z' + 1) {
+				temp = 'a';
+			}
+		}
+	}
+	for (int i = 0; i < col; i++) {
+		for (int j = 0; j < row; j++) {
+			printf("%c ", p[i][j]);
+		}
+		printf("\n");
+	}
+
+	for (int i = 0; i < col; i++) {
+		free(p[i]);
+	}
+
+
+	if (p != NULL)			
+		free(p);
+
+	return 0;
+}

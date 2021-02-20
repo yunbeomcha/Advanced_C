@@ -1,0 +1,36 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <string.h>
+struct student{
+	char name[10];
+	char book[5][20];
+	int score[5];
+	int cnt, pcnt;
+};
+int main() {
+	int i, j, n;
+	int per[100] = { 0, };
+	struct student p[100];
+	scanf("%d", &n);
+	for (i = 0; i < n; i++) {
+		p[i].cnt = 0;
+		p[i].pcnt = 0;
+		scanf("%s", p[i].name);
+		for (j = 0; j <= 5; j++) {
+			scanf("%s", p[i].book[j]);
+			if (strcmp(p[i].book[j], "0") == 0) {
+				break;
+			}
+			scanf("%d", &p[i].score[j]);
+			if (p[i].score[j] >= 50) {
+				p[i].pcnt++;
+			}
+			p[i].cnt++;
+		}
+		per[i] = p[i].pcnt * 20;
+	}
+	for (i = 0; i < n; i++) {
+		printf("%s %d%%\n", p[i].name, per[i]);
+	}
+	return 0;
+}

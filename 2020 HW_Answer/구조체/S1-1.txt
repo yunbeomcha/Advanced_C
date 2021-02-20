@@ -1,0 +1,24 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <string.h>
+
+struct student
+{
+	char name[10];
+	char student_ID[11];
+	char grade;
+}; //student 구조체
+int main(void) {
+	struct student p[5];
+	char inputname[10] = { 0, }; //찾을 이름 선언
+	for (int i = 0; i < 5; i++) {
+		scanf("%s %s %c", &p[i].name, &p[i].student_ID, &p[i].grade);
+	} //5명의 학생이름, 학번, 학점 입력
+	scanf("%s", inputname); //찾을 학생이름 입력
+	for (int i = 0; i < 5; i++) {
+		if (strcmp( inputname ,p[i].name) == 0) { //학생이름이 같으면 학번과 학점 출력
+			printf(" %s %c", p[i].student_ID, p[i].grade);
+		}
+	}
+	return 0;
+}

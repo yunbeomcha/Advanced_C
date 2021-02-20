@@ -1,0 +1,55 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+	char** y, * x, tmp[101], ** tmpp, ** p, ** q, *temp;
+	int n, i, j, * num, cnt, flag = 0;
+
+	scanf("%d %s", &n, tmp);
+	getchar();
+
+	x = (char*)malloc(sizeof(char) * (strlen(tmp) + 1));
+	strcpy(x, tmp);
+	y = (char**)malloc(n * sizeof(char*));
+	num = (int*)malloc(n * sizeof(int));
+
+	for (i = 0; i < n; i++) {
+		gets(tmp);
+		y[i] = (char*)malloc(sizeof(char) * (strlen(tmp) + 1));
+		strcpy(y[i], tmp);
+	} //n만큼 임시 변수받고 복사
+
+	for (i = 0; i < n; i++) {
+		cnt = 0;
+		for (j = 0; y[i][j]; j++) {
+			if (strncmp(x, &y[i][j], strlen(x)) == 0) { //x랑 y[i][j] 문자열을 x길이 만큼 비교
+				cnt++;
+				j += strlen(x) - 1;
+				flag = 1; //같으면 flag를 1
+			}
+		}
+		num[i] = cnt;
+
+	}
+
+	for (i = 0; i < n; i++) {
+		for (j = i + 1; j < n; j++) {
+			if (num[i] < num[j]) {
+				temp = y[j];
+				y[j] = y[i];
+				y[i] = temp;
+			}
+		}
+	}
+	
+
+	if (flag == 0) {
+		printf("NONE");
+	}
+	else {
+		printf("%s", y[0]);
+	}
+
+}

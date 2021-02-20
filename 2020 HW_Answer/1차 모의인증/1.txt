@@ -1,0 +1,55 @@
+#include<stdio.h>
+#pragma warning(disable:4996)
+void input(int *p, int M){
+	int *q;
+
+	for (q=p; q<p+M; q++){
+		scanf("%d", q);
+	}	
+}
+
+int *sel_max(int *p, int M){
+	int max, *max_p, *q, *r, cnt; 
+
+	max=0;
+	max_p=NULL;
+
+	for (q=p; q<p+M; q++){
+		cnt=0;
+		for (r=p; r<p+M; r++){
+			if (*q==*r){	
+				cnt++;
+			}
+		}
+		if (cnt>max){
+			max=cnt;
+			max_p=q;
+		}
+	}
+
+	return max_p;
+}
+
+void output(int *p, int N){
+	int *q;
+
+	for (q=p; q<p+N; q++){
+		printf(" %d", *q);
+	}
+}
+
+int main(void){
+	int in[100], out[100], *max, i, N, M;
+
+	scanf("%d %d", &N, &M);
+
+	for (i=0; i<N; i++){
+		input(in, M);
+		max=sel_max(in, M);
+		out[i]=*max;
+	}
+
+	output(out, N);
+
+	return 0;
+}

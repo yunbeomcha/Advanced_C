@@ -1,0 +1,50 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+void Read(char *c, int N) {
+	char* p;
+	for (p = c; p < c + N; p++) {
+		char ch;
+		scanf("%c", &ch);
+		*p = ch;
+	}
+	getchar();
+	*p = '\0';
+}
+void check(char *c1, char *c2, char ch) {
+	int i = 0;
+	char* p;
+	for (p = c1; *p != '\0'; p++) {
+		if (*p == ch) {
+			*(c2+i) = ch;
+		}
+		i++;
+	}
+}
+void Write(char *c, int N) {
+	char* p;
+	printf(" ");
+	for (p = c; p < c + N; p++) {
+		printf("%c", *p);
+	}
+	printf("\n");
+}
+int main() {
+	char x[101], y[101], ch;
+	int N, M;
+	scanf("%d %d", &N, &M);
+	getchar();
+	
+	for (int i = 0; i < N; i++) {
+		y[i] = '_';
+	}
+	Read(x, N);
+	for (int i = 0; i < M; i++) {
+		scanf("%c", &ch);
+		getchar();
+		check(x, y, ch);
+		Write(y, N);
+	}
+	return 0;
+}

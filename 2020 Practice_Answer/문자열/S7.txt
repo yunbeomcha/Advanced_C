@@ -1,0 +1,39 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <string.h>
+int check_n(int n);
+int main() {
+	char arr[100];
+	char num[9][9] = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+	char ten[3][4] = { "TEN","HUN", "THO" };
+	int n = 0, len, cnt = 1;
+	int temp = 0;
+	scanf("%d", &n);
+
+	len = check_n(n);
+	
+	for (int i = len; i > 0; i--) {
+		cnt *= 10;
+	}
+	for (int i = len; i > 0; i--) {
+		cnt /= 10;
+		temp = n / cnt;
+		
+		if (temp != 0) {
+			printf("%s ", num[temp - 1]);
+		}
+		if (i != 1 && temp != 0) {
+			printf("%s ", ten[i - 2]);
+		}
+		n %= cnt;
+	}
+}
+
+int check_n(int n) {
+	int cnt = 0;
+	while (n > 0) {
+		n /= 10;
+		cnt++;
+	}
+	return cnt;
+}

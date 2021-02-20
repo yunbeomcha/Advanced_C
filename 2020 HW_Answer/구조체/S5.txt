@@ -1,0 +1,88 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <string.h>
+struct student {
+	char name[31];
+	int id;
+	int subcnt;
+	char subname[11][31];
+	double grade[11];
+};
+void print_s(struct student p[], int cnt) {
+	double sum = 0.0;
+	for (int i = 0; i < cnt; i++) {
+		for (int j = 0; j < p[i].subcnt; j++) {
+			sum += p[i].grade[j];
+		}
+		printf("%s %d %d %.2lf\n", p[i].name, p[i].id, p[i].subcnt, sum / (double)p[i].subcnt);
+		sum = 0;
+	}
+}
+void sort_s(struct student p[], int cnt) {
+	struct student s[100];
+	struct student temp;
+
+	for (int i = 0; i < cnt; i++) {
+		s[i] = p[i];
+	}
+	for (int i = 0; i < cnt; i++) {
+		for (int j = i + 1; j < cnt; j++) {
+			if (strcmp(s[i].name, s[j].name) > 0) { // 오름차순
+				temp = s[j];
+				s[j] = s[i];
+				s[i] = temp;
+			}
+		}
+	}
+	print_s(s, cnt);
+}
+
+int main() {
+	struct student p[100];
+	char command;
+	int  i = 0;
+	int ch;
+	while (1) {
+		scanf("%c", &command);
+		getchar();
+		switch (command) {
+		case 'I':
+			scanf("%s %d %d", p[i].name, &p[i].id, &p[i].subcnt);
+			getchar();
+			for (int j = 0; j < p[i].subcnt; j++) {
+				scanf("%s %lf", p[i].subname[j], &p[i].grade[j]);
+				getchar();
+			}
+			i++;
+			break;
+		case 'S':
+			sort_s(p, i);
+			break;
+		case 'D':
+			ch = -1;
+			char na[31];
+			gets(na);
+			for (int j = 0; j < i; j++)
+				if (strcmp(na, p[j].name) == 0)
+					ch = j;
+			if (ch != -1) {
+				for (int j = ch; j < i - 1; j++) {
+					p[j] = p[j + 1];
+				}
+				i--;
+			}
+			
+			break;
+		case 'P':
+			if (i != 0) {
+				print_s(p, i);
+			}
+			break;
+		case 'Q':
+		return 0;
+			break;
+			
+		}
+	}
+	
+}

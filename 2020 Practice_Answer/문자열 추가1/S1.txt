@@ -1,0 +1,19 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+
+int main()
+{
+	int N, num, i;
+	char ar[10][101];
+	scanf("%d", &N);
+	getchar();
+
+	for (i = 0; i < N; i++) {
+		gets(ar[i]);
+	}
+	for (i = 0; i < N; i++)
+	{
+		scanf("%d", &num);
+		printf("%s ", ar[num - 1]);
+	}
+}

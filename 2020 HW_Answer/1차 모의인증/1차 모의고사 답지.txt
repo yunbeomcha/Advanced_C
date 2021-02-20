@@ -1,0 +1,275 @@
+----------------------------------
+* [ 문제 1 ] 포인터 - 박태순
+----------------------------------
+#include<stdio.h>
+void input(int *p, int M){
+	int *q;
+
+	for (q=p; q<p+M; q++){
+		scanf("%d", q);
+	}	
+}
+
+int *sel_max(int *p, int M){
+	int max, *max_p, *q, *r, cnt; 
+
+	max=0;
+	max_p=NULL;
+
+	for (q=p; q<p+M; q++){
+		cnt=0;
+		for (r=p; r<p+M; r++){
+			if (*q==*r){	
+				cnt++;
+			}
+		}
+		if (cnt>max){
+			max=cnt;
+			max_p=q;
+		}
+	}
+
+	return max_p;
+}
+
+void output(int *p, int N){
+	int *q;
+
+	for (q=p; q<p+N; q++){
+		printf(" %d", *q);
+	}
+}
+
+int main(void){
+	int in[100], out[100], *max, i, N, M;
+
+	scanf("%d %d", &N, &M);
+
+	for (i=0; i<N; i++){
+		input(in, M);
+		max=sel_max(in, M);
+		out[i]=*max;
+	}
+
+	output(out, N);
+
+	return 0;
+}
+----------------------------------
+* [ 문제 2-1 ] 문자열 - 김도년
+----------------------------------
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+	char str[101], str1[100][101],*p;
+	int i, j, N, M=0;
+
+	p = str;
+	gets(str); 	scanf("%d", &N);
+	for (i = 0; ; i++) {
+		if (str[i] == ' ') {
+			str[i] = '\0';
+			strcpy(str1[M++], p);
+			p = &str[i] + 1;
+		}
+		else if (str[i] == '\0') {
+			strcpy(str1[M], p); break;
+		}
+	}
+	puts(str1[N - 1]);
+}
+----------------------------------
+* [ 문제 2-2 ] 문자열 - 김도년
+----------------------------------
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+	char str[101], str1[100][101],*p, str2[101];
+	int i, j, N, M=0;
+
+	p = str;
+	gets(str); 	scanf("%d", &N);
+	for (i = 0; ; i++) {
+		if (str[i] == ' ') {
+			str[i] = '\0';
+			strcpy(str1[M++], p);
+			p = &str[i] + 1;
+		}
+		else if (str[i] == '\0') {
+			strcpy(str1[M], p); break;
+		}
+	}
+	puts(str1[N - 1]);
+	for (i = 0; i <= M; i++) {
+		if (strcmp(str2, str1[i]) > 0 || i == 0 )
+			strcpy(str2, str1[i]);
+	}
+	puts(str2);
+}
+----------------------------------
+* [ 문제 3 ] 문자열 - 장문정
+----------------------------------
+#include <stdio.h>
+#include <string.h>
+
+int Convertor(char a);
+void StringAdd(char arr[], char ch, int index);
+
+int main()
+{
+	char n[20]="";         // 모두 널로 채움
+	int temp[2] = { 0 };
+	int num = 0, top = 0, length, i;
+
+	scanf("%s", n);
+	length = strlen(n);
+
+	for (i = 0; i < length - 1; i++)
+	{
+		temp[0] = Convertor(n[i]);
+		temp[1] = Convertor(n[i+1]);
+
+		if (temp[0] % 2 == 1)
+		{
+			if (temp[1] % 2 == 1)
+			{
+				StringAdd(n, '+', i + 1);
+				length++;
+				i++;
+			}
+		}
+		else
+		{
+			if (temp[1] % 2 == 0)
+			{
+				StringAdd(n, '*', i + 1);
+				length++;
+				i++;
+			}
+		}
+	}
+
+	printf("%s",n);
+	return 0;
+}
+
+int Convertor(char a)
+{
+	if('9' >= a && a >= '0')	
+		return a - '0';
+}
+
+void StringAdd(char arr[], char ch, int index)
+{
+	int j = 0, ln;
+	ln = strlen(arr);
+
+	for (j = ln - 1; j != index - 1 ; j--)
+		arr[j + 1] = arr[j];
+	
+	arr[index] = ch;
+}
+----------------------------------
+* [ 문제 4 ] 구조체 - 조상욱
+----------------------------------
+#include<stdio.h>
+#pragma warning(disable : 4996)
+#include<string.h>
+ 
+typedef struct st {
+	char name[10]; //학생이름
+	char book[5][20]; //인증시험 본 책에 대한 정보
+	int score[5];
+	int cnt, pcnt; //인증시험 본 책의 권수, 통과한 책의 권수
+};
+typedef struct st St;  // typedef를 이용한 St 자료형 선언
+
+int main()
+{
+	int N, i, j;
+	St st[100];
+
+	scanf("%d", &N);   // 학생 수 읽기
+	for (i = 0; i < N; i++) {
+		st[i].cnt = 0;
+		st[i].pcnt = 0;  // 책 권수, 통과한 책 권수 초기화
+		scanf("%s", st[i].name);   // 학생 이름 읽기
+		for (j = 0; j < 6; j++) {   // 최대 5권의 책이름과 점수 읽기
+			scanf("%s", st[i].book[j]);
+			if (strcmp(st[i].book[j], "0") == 0) // 이름이 0인 경우 다음 학생으로
+				break;
+			scanf("%d", &st[i].score[i]);  // 점수 읽기
+			if (st[i].score[i] >= 50)
+				st[i].pcnt++;  // 통과한 책 권수 계산
+			st[i].cnt++;  // 책 권수 계산
+		}
+	}
+
+	for (i = 0; i < N; i++)
+		printf("%s %d\%%\n", st[i].name, st[i].pcnt * 100 / 5);  // 출력하기
+
+	return 0;
+}
+----------------------------------
+* [ 문제 5 ] 구조체 - 한동일
+----------------------------------
+#include <stdio.h>
+#include <string.h>
+
+typedef struct Student{
+	char	department[51];		// 학과
+	char	id[8];			// 학번
+}STUDENT;
+
+void	student_sort(STUDENT*, int);
+
+void	main()
+{
+	STUDENT	student[100];	// 학생들의 정보
+	int		i, n;
+
+	scanf("%d", &n);		// 입력받을 횟수
+	getchar();
+
+	for (i = 0; i < n; i++)
+	{
+		gets(student[i].department);	// 공백을 포함한 학과 이름
+		scanf("%s",student[i].id);	// 학생 학번 입력
+		getchar();
+	}
+
+	student_sort(student, n);	// 정렬; 구조체와 학생 인원수를 넘김
+
+	for (i = 0; i < n; i++)	// 출력
+		printf("%s %s\n", student[i].department, student[i].id);
+}
+/////////////////////////////////////////////////////////
+/////	func :		student_sort
+/////	param :		학생들 정보를 담은 구조체 배열(포인터), 학생 수를 가리키는 정수
+/////	role :		학생들의 학과와 학번을 기준으로 이중정렬을 수행
+/////	return :		void
+void	student_sort(STUDENT* std, int n)
+{
+	int		i, j;	// index
+	STUDENT	tmp;	// sort용 tmep 구조체
+
+	for (i = 0; i < n - 1; i++)	// 학과 이름을 기준으로 사전순 정렬
+		for (j = i; j < n; j++)
+			if (strcmp(std[i].department, std[j].department) > 0)
+			{
+				tmp = std[i];
+				std[i] = std[j];
+				std[j] = tmp;
+			}
+	
+	for (i = 0; i < n - 1; i++)	// 같은 학과 내에서 학번을 기준으로 학번순 정렬
+		for (j = i; j < n; j++)
+			if (strcmp(std[i].department, std[j].department) == 0 && strcmp(std[i].id, std[j].id) > 0)
+			{
+				tmp = std[i];
+				std[i] = std[j];
+				std[j] = tmp;
+			}
+}

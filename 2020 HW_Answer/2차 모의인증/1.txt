@@ -1,0 +1,40 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+void input(int* p, int N);
+void output(int* p, int K);
+int main() {
+	int M, N; scanf("%d %d", &M, &N);
+	int X[100], Y[100];
+	input(X, M); input(Y, N);
+	int K; scanf("%d", &K);
+
+	int* x = X, * y = Y, cnt = 0, i= 0,j=0;
+	int flag = 0;
+
+	while (1) {
+		if (i < (M / K)) {
+			output(x, K);
+			x += K;
+			cnt += K;
+			i++;
+		}
+		if (j < (N / K)) {
+			output(y, K);
+			y += K;
+			cnt += K;
+			j++;
+		}
+		if (cnt == (M + N))
+			break;
+	}
+}
+void input(int* p, int N) {
+	int cnt;
+	for (cnt = N; cnt > 0; cnt--, p++) scanf("%d", p);
+}
+void output(int* p, int K) {
+	int cnt;
+	for (cnt = K; cnt > 0; p++, cnt--) printf(" %d", *p);
+}

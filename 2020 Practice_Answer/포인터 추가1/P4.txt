@@ -1,0 +1,30 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <string.h>
+void repeat(char ar[], int N) {
+	int i, j, len = 0;
+	char* p = ar, * q = ar;
+	
+	while (*p != '*') {
+		len++;
+		p++;
+	}
+
+	for (i = 0; i < N; i++) {
+		for (p = ar; p < ar + len; p++) {
+			*q = *p;
+			*q++;
+		}
+	}
+	*q = '*';
+}
+int main(void){
+	char str[100] = { 0 };
+	int N;
+	char *p = str;
+	scanf("%s", str);
+	scanf("%d", &N);
+	repeat(str, N);
+	printf("%s", str);
+	return 0;
+}

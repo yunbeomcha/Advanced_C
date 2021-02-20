@@ -1,0 +1,62 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Complex {
+	double real;
+	double img;
+	double value;
+}COM;
+
+COM add(COM a, COM b) {
+	COM tmp;
+	tmp.real = a.real + b.real;
+	tmp.img = a.img + b.img;	
+	return tmp;
+}
+
+COM sub(COM a, COM b) {
+	COM temp;
+	temp.real = a.real - b.real;
+	temp.img = a.img - b.img;
+	return temp;
+}
+
+void abs_val(COM* a, COM* b, COM* c) {
+	COM max, min;
+
+	max = min = *a;
+	
+	if (max.value < b->value)
+		max = *b;
+	else if (min.value > b->value)
+		min = *b;
+
+	if (max.value < c->value)
+		max = *c;
+	else if (min.value > c->value)
+		min = *c;
+
+	*a = max;
+	*b = min;
+} //절대값 비교
+
+int main() {
+	int m, n, k, cnt = 0, min, i, j;
+	COM p[3], addresult, subresult;
+
+	for (i = 0; i < 3; i++) {
+		scanf("%lf %lf", &p[i].real, &p[i].img);
+		p[i].value = p[i].real * p[i].real + p[i].img * p[i].img;
+	}
+	/*14.96 13.44 37.72*/
+	abs_val(&p[0], &p[1], &p[2]);
+
+	addresult = add(p[0], p[1]);//합
+	subresult = sub(p[0], p[1]);//차
+
+	printf("%.1lf%+.1lfi\n", addresult.real, addresult.img);
+	printf("%.1lf%+.1lfi", subresult.real, subresult.img);
+	return 0;
+}

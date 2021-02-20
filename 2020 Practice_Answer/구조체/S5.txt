@@ -1,0 +1,37 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+
+struct student {
+	char name[20];
+	int s1, s2, s3;
+	double avg;
+	
+};
+int main() {
+	struct student person[50], *p;
+	int sum = 0;
+	double avg;
+	int n;
+	scanf("%d", &n);
+	for (p = person; p < person + n; p++) {
+		scanf("%s %d %d %d", p->name , &p->s1, &p->s2, &p->s3);
+		sum = (p->s1 + p->s2 + p->s3);
+		p->avg = sum / 3.0;
+	}
+	for (p = person; p < person + n; p++) {
+		printf("%s %.1lf ", p->name, p->avg);
+		if (p->avg >= 90) {
+			printf("A\n");
+		}
+		else if (p->avg >= 80) {
+			printf("B\n");
+		}
+		else if (p->avg >= 70) {
+			printf("C\n");
+		}
+		else {
+			printf("D\n");
+		}
+	}
+	return 0;
+}

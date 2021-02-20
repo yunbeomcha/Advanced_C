@@ -1,0 +1,28 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <string.h>
+
+int check(char* x);
+
+int main() {
+	char str[30];
+	scanf("%s", str);
+
+	printf("%d", check(str));
+	return 0;
+}
+
+int check(char* x) {
+	int num = 0, i = 0;
+
+	while (x[num++]!=NULL);
+	num -= 1;
+	printf("%d ", num);	
+
+	for (i = 0; i <= num / 2 && x[i] == x[num - i - 1]; i++);
+
+	if (i - 1 == num / 2)
+		return 1;
+	else
+		return 0;
+}

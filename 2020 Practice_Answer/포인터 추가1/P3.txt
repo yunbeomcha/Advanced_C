@@ -1,0 +1,41 @@
+#pragma warning(disable:4996)
+#include<stdio.h>
+#include<string.h>
+void eliminate(char ar[]) {
+	int flag, count, ending = 0;
+	int arlen = strlen(ar);
+
+	for (char* q = ar;; q++) {
+		if (*q == '*') {
+			ending = 1;
+		}
+		flag = 0;
+		count = 0;
+		for (char* r = ar; r < q; r++) {
+			if (*q == *r) {
+				flag = 1;
+			}
+		}
+		for (char* r = ar; r < ar + arlen; r++) {
+			if (*q == *r) {
+				count++;
+			}
+
+		}
+		if (flag == 0) {
+			printf("%c", *q);
+		}
+
+		if (ending == 1)
+			break;
+	}
+}
+int main() {
+	char ar[101];
+
+	scanf("%s", ar);
+
+	eliminate(ar);
+	
+	return 0;
+}

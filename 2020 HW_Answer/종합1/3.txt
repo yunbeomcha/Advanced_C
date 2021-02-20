@@ -1,0 +1,35 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct Point {
+	int x;
+	int y;
+}point;
+int main() {
+	point* p, * q, a, b;
+	int N, max = 0, distance;
+	scanf("%d", &N);
+	p = (point*)malloc(N * sizeof(point));
+	if (p == NULL) {
+		return -1;
+	}
+	for (int i = 0; i < N; i++) {
+		scanf("%d %d", &p[i].x, &p[i].y);
+	}
+	for (int i = 0; i < N; i++) {
+		for (int j = i + 1; j < N; j++) {
+			distance = (p[i].x - p[j].x) * (p[i].x - p[j].x) + (p[i].y - p[j].y) * (p[i].y - p[j].y);
+			if (max < distance) {
+				max = distance;
+				a = p[i];
+				b = p[j];
+			}
+		}
+	}
+
+	printf("%d %d\n", a.x, a.y);
+	printf("%d %d\n", b.x, b.y);
+	free(p);
+	return 0;
+}

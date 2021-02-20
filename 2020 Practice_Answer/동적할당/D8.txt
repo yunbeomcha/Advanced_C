@@ -1,0 +1,33 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+	int N;
+	char* p = NULL;
+	int cnt = 0;
+	scanf("%d", &N);
+	getchar();
+	p = (char*)malloc(N * sizeof(char));
+	if (p == NULL) {
+		return -1;
+	}
+
+	for (int i = 0; i < N; i++) {
+		scanf("%c", &p[i]);
+	}
+	
+	for (int i = 0; i < N-2; i++) {
+		if (p[i] == 'c' && p[i + 1] == 'a' && p[i + 2] == 't') {
+			cnt++;
+		}
+		
+	}
+
+	printf("%d", cnt);
+	if (p != NULL) {
+		free(p);
+	}
+	return 0;
+}

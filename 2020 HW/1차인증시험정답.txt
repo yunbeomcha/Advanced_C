@@ -1,0 +1,890 @@
+1-1
+
+int input(int *p);
+
+int *sel_next(int *p, int N, int M);
+
+int number(int *p, int *q);
+
+ 
+
+int main() {
+
+	int x[100];
+
+ 
+
+	int n = input(x);
+
+ 
+
+	int M;
+
+	scanf("%d", &M);
+
+ 
+
+	int *answer = sel_next(x, n, M);
+
+ 
+
+	printf("%d", number(x + M, answer));
+
+ 
+
+	return 0;
+
+}
+
+ 
+
+int input(int *p) {
+
+	int len = 0;
+
+ 
+
+	for (int *q = p;; q++) {
+
+		scanf("%d", q);
+
+		if (*q == -1)	break;
+
+		len++;
+
+	}
+
+	return len;
+
+}
+
+ 
+
+int *sel_next(int *p, int N, int M) {
+
+	int *final_address = {0};
+
+	int diff;
+
+ 
+
+	for (int *q = p + M; q < p + N; q++) {
+
+		diff = *(q + 1) - *q;
+
+		if (diff == 1) {
+
+			final_address = q + 1;
+
+		}
+
+		if (diff != 1) {
+
+			final_address = q;
+
+			break;
+
+		}
+
+	}
+
+	return final_address;
+
+}
+
+ 
+
+int number(int *p, int *q) {
+
+	int total = 0;
+
+	for (int *r = p; r <= q; r++) {
+
+		total *= 10;
+
+		total += *r;
+
+	}
+
+	return total;
+
+}
+
+
+2-1
+
+int main() {
+
+	char str[101] = { '0' }, ch[100][100] = { '0' };
+
+ 
+
+	gets_s(str, 101);
+
+ 
+
+	int len = strlen(str);
+
+ 
+
+	int m = 0, n = 0;
+
+ 
+
+	for (int i = 0; i < len; i++) {
+
+		if (str[i] == ' ') {
+
+			ch[m][n] = '\0';
+
+			n = 0;
+
+			m++;
+
+		}
+
+		else {
+
+			ch[m][n] = str[i];
+
+			n++;
+
+		}
+
+ 
+
+	}
+
+	int max = 0;
+
+	char answer[100] = {0};
+
+ 
+
+	for (int i = 0; i <= m; i++) {
+
+		int n = strlen(ch[i]);
+
+		if (n > max) {
+
+			max = strlen(ch[i]);
+
+			strcpy(answer, ch[i]);
+
+		}
+
+	}
+
+	printf("%s", answer);
+
+ 
+
+}
+
+ 
+
+ 
+
+2-2
+
+int main() {
+
+	int N;
+
+	scanf("%d", &N);
+
+ 
+
+	char str[10][101];
+
+	char tmp[101] = {0};
+
+	char conver1[15][101] = {0};
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		gets_s(str[i], 101);
+
+		getchar();
+
+	}
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		for (int j = 0; j < N - i - 1; j++) {
+
+			int n1 = strlen(str[j]);
+
+			int n2 = strlen(str[j + 1]);
+
+			if (n1 > n2) {
+
+				strcpy(tmp, str[j]);
+
+				strcpy(str[j], str[j + 1]);
+
+				strcpy(str[j + 1], tmp);
+
+			}
+
+		}
+
+	}
+
+ 
+
+	int m = strlen(str[0]);
+
+	int a = 0, b = 0;
+
+	for (int i = 0; i < m; i++) {
+
+		if (str[0][i] == ' ') {
+
+			conver1[a][b] = '\0';
+
+			b = 0;
+
+			a++;
+
+		}
+
+		else {
+
+			conver1[a][b] = str[0][i];
+
+			b++;
+
+		}
+
+	}
+
+	int min = 9999999;
+
+	char answer1[100] = { 0 };
+
+ 
+
+	for (int i = 0; i <= a; i++) {
+
+		int n = strlen(conver1[i]);
+
+		if (n < min) {
+
+			min = strlen(conver1[i]);
+
+			strcpy(answer1, conver1[i]);
+
+		}
+
+	}
+
+	printf("%s\n", answer1);
+
+ 
+
+	char conver2[15][101];
+
+ 
+
+	int l = strlen(str[0]);
+
+	a = 0, b = 0;
+
+	for (int i = 0; i < l; i++) {
+
+		if (str[0][i] == ' ') {
+
+			conver2[a][b] = '\0';
+
+			b = 0;
+
+			a++;
+
+		}
+
+		else {
+
+			conver2[a][b] = str[0][i];
+
+			b++;
+
+		}
+
+	}
+
+	int max = 0;
+
+	char answer2[100] = { 0 };
+
+ 
+
+	for (int i = 0; i <= a; i++) {
+
+		int n = strlen(conver1[i]);
+
+		if (n > max) {
+
+			max = strlen(conver2[i]);
+
+			strcpy(answer2, conver2[i]);
+
+		}
+
+	}
+
+	printf("%s\n", answer2);
+
+}
+
+ 
+
+ 
+
+ 
+
+3-1
+
+int main() {
+
+	char str[150], input[10], answer[15][150] = {0};
+
+ 
+
+	gets_s(str, 150);
+
+	scanf("%s", input);
+
+ 
+
+	int len = strlen(str);
+
+	int m = 0, n = 0;
+
+ 
+
+	for (int i = 0; i < len; i++) {
+
+		if (str[i] == ' ') {
+
+			answer[m][n] = '\0';
+
+			n = 0;
+
+			m++;
+
+		}
+
+		else {
+
+			answer[m][n] = str[i];
+
+			n++;
+
+		}
+
+	}
+
+ 
+
+	for (int i = 0; i <= m; i++) {
+
+		if (strcmp(answer[i], input) != 0)
+
+			printf("%s ", answer[i]);
+
+	}
+
+}
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4-1
+
+struct person {
+
+	char name[11];
+
+	int test1;
+
+	int test2;
+
+	double total;
+
+};
+
+ 
+
+ 
+
+void swap(struct person *p, struct person *q);
+
+ 
+
+int main() {
+
+	struct person x[100];
+
+ 
+
+	int N, M;
+
+	scanf("%d%d", &N, &M);
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		scanf("%s %d %d", x[i].name, &x[i].test1, &x[i].test2);
+
+		getchar();
+
+	}
+
+	for (int i = 0; i < N; i++) {
+
+		x[i].total = x[i].test1 *(0.8) + x[i].test2*(0.2);
+
+	}
+
+	for (int i = 0; i < N; i++) {
+
+		for (int j = 0; j < N - i - 1; j++) {
+
+			if (x[j].total < x[j+1].total) {
+
+				swap(x + j, x + j + 1);
+
+			}
+
+		}
+
+	}
+
+ 
+
+	for (int i = 0; i < M; i++) {
+
+		printf("%s %.1lf\n", x[i].name, x[i].total);
+
+ 
+
+	}
+
+ 
+
+	return 0;
+
+}
+
+ 
+
+ 
+
+void swap(struct person *p, struct person *q) {
+
+	struct person tmp;
+
+	tmp = *p;
+
+	*p = *q;
+
+	*q = tmp;
+
+}
+
+ 
+
+ 
+
+ 
+
+ 
+
+4-2
+
+struct person {
+
+	char name[11];
+
+	int test1;
+
+	int test2;
+
+	double total;
+
+};
+
+ 
+
+ 
+
+void swap(struct person *p, struct person *q);
+
+ 
+
+int main() {
+
+	struct person x[100];
+
+ 
+
+	int N, M;
+
+	scanf("%d%d", &N, &M);
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		scanf("%s %d %d", x[i].name, &x[i].test1, &x[i].test2);
+
+		getchar();
+
+	}
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		x[i].total = x[i].test1 *(0.8) + x[i].test2*(0.2);
+
+	}
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		for (int j = 0; j < N - i - 1; j++) {
+
+			if (x[j].total < x[j + 1].total) {
+
+				swap(x + j, x + j + 1);
+
+			}
+
+			if (x[j].total == x[j + 1].total) {
+
+				if (x[j].test1 < x[j + 1].test1) {
+
+					swap(x + j, x + j + 1);
+
+				}
+
+			}
+
+		}
+
+	}
+
+ 
+
+	for (int i = 0; i < M; i++) {
+
+		printf("%s %.1lf\n", x[i].name, x[i].total);
+
+ 
+
+	}
+
+ 
+
+	return 0;
+
+}
+
+ 
+
+ 
+
+void swap(struct person *p, struct person *q) {
+
+	struct person tmp;
+
+	tmp = *p;
+
+	*p = *q;
+
+	*q = tmp;
+
+}
+
+ 
+
+ 
+
+4-3
+
+struct person {
+
+	char name[11];
+
+	int year;
+
+	int month;
+
+	int day;
+
+	int test1;
+
+	int test2;
+
+	double total;
+
+};
+
+ 
+
+ 
+
+void swap(struct person *p, struct person *q);
+
+ 
+
+int main() {
+
+	struct person x[100];
+
+ 
+
+	int N, M;
+
+	scanf("%d%d", &N, &M);
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		scanf("%s %d-%d-%d %d %d", x[i].name, &x[i].year, &x[i].month, &x[i].day, &x[i].test1, &x[i].test2);
+
+		getchar();
+
+	}
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		x[i].total = x[i].test1 *(0.8) + x[i].test2*(0.2);
+
+	}
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		for (int j = 0; j < N - i - 1; j++) {
+
+			if (x[j].total < x[j + 1].total) {
+
+				swap(x + j, x + j + 1);
+
+			}
+
+			if (x[j].total == x[j + 1].total) {
+
+				if (x[j].test1 < x[j + 1].test1) {
+
+					swap(x + j, x + j + 1);
+
+				}
+
+				if (x[j].test1 == x[j + 1].test1) {
+
+					if (x[j].year < x[j + 1].year) {
+
+						swap(x + j, x + j + 1);
+
+					}
+
+					if (x[j].year == x[j + 1].year) {
+
+						if (x[j].month < x[j + 1].month) {
+
+							swap(x + j, x + j + 1);
+
+						}
+
+						if (x[j].month == x[j + 1].month) {
+
+							if (x[j].day < x[j + 1].day) {
+
+								swap(x + j, x + j + 1);
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+ 
+
+	for (int i = 0; i < M; i++) {
+
+		printf("%s %.1lf\n", x[i].name, x[i].total);
+
+ 
+
+	}
+
+ 
+
+	return 0;
+
+}
+
+ 
+
+ 
+
+void swap(struct person *p, struct person *q) {
+
+	struct person tmp;
+
+	tmp = *p;
+
+	*p = *q;
+
+	*q = tmp;
+
+}
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5-1
+
+struct word {
+
+	char letters[21];
+
+	int count; 
+
+};
+
+ 
+
+ 
+
+void count_word(struct word *word, int N);
+
+ 
+
+int main() {
+
+	int N;
+
+	scanf("%d", &N);
+
+ 
+
+	struct word x[100] = {0};
+
+ 
+
+	for (int i = 0; i < N; i++) {
+
+		scanf("%s", x[i].letters);
+
+		getchar();
+
+	}
+
+	
+
+	count_word(x, N);
+
+	struct word tmp;
+
+	for (int i = 0; i < N; i++) {
+
+		for (struct word *p = x; p < x + N - i - 1; p++) {
+
+			if (p->count < (p + 1)->count) {
+
+				tmp = *p;
+
+				*p = *(p + 1);
+
+				*(p + 1) = tmp;
+
+			}
+
+		}
+
+	}
+
+	for (int i = 0; i < N; i++) {
+
+		printf("%d %s\n", x[i].count, x[i].letters);
+
+	}
+
+ 
+
+ 
+
+	return 0;
+
+}
+
+ 
+
+void count_word(struct word *word, int N) {
+
+	for (struct word *q = word; q < word + N; q++) {
+
+		for (int i = 0; ; i++) {
+
+			if (q->letters[i] == 'A' || q->letters[i] == 'E' || q->letters[i] == 'I' || q->letters[i] == 'O' || q->letters[i] == 'U' || q->letters[i] == 'a' || q->letters[i] == 'e' || q->letters[i] == 'i' || q->letters[i] == 'o' || q->letters[i] == 'u') {
+
+				q->count++;
+
+			}
+
+			if (q->letters[i] == '\0')	break;
+
+ 
+
+		}
+
+	}
+
+ 
+
+}

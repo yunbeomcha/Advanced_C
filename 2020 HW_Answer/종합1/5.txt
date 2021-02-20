@@ -1,0 +1,62 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct STUDENT {
+	char* name;
+	int kor;
+}st;
+st *center(st* p, int N) {
+	st* min, * q = NULL, temp;
+	int i, sum = 0;
+	double avg, result, min_s = 100;
+	for (i = 0; i < N; i++) {
+		sum += p[i].kor;
+	}
+	avg = (double)sum / N;
+	
+	for (i = 0; i < N; i++) {
+		if (p[i].kor > avg) {
+			result = p[i].kor - avg;
+		}
+		if (p[i].kor < avg) {
+			result = avg - p[i].kor;
+		}
+		if (p[i].kor == avg) {
+			result = 0;
+		}
+		if (result < min_s) {
+			min_s = result;
+			q = p+i;
+		}
+	}
+
+	return q;
+}
+int main() {
+	int i, j, N;
+	char tmp[31];
+	st* p, * k;
+	scanf("%d", &N);
+	p = (st*)malloc(N * sizeof(st));
+	if (p == NULL)
+		return -1;
+
+	for (i = 0; i < N; i++) {
+		scanf("%s", tmp);
+		p[i].name = (char*)malloc(sizeof(char) * strlen(tmp) + 1);
+		if (p[i].name == NULL)
+			return -1;
+		strcpy(p[i].name, tmp);
+		scanf("%d", &p[i].kor);
+	}
+	k = center(p, N);
+	
+	printf("%s %d", k->name, k->kor);
+	
+	for (i = 0; i < N; i++) {
+		free(p[i].name);
+	}
+	free(p);
+	return 0;
+}

@@ -1,0 +1,26 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+struct student {
+	char name[10];
+	int score;
+};
+struct student *select_min(struct student *p) {
+	struct student* min = 0;
+	int standard_score = 100;
+	for (int i = 0; i < 5; i++) {
+		if (standard_score > p[i].score) {
+			standard_score = p[i].score;
+			min = &p[i];
+		}
+	}
+	return min;
+}
+int main() {
+	struct student person[5], * min_student;
+	for (int i = 0; i < 5; i++) {
+		scanf("%s %d", &person[i].name, &person[i].score);
+	}
+	min_student = select_min(person);
+	printf("%s %d", min_student->name, min_student->score);
+	return 0;
+}

@@ -1,0 +1,28 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int orderN(int *p, int M, int N) {
+	int i, j, temp, k;
+	for (i = 0; i < M; i++) {
+		for (j = i + 1; j < M; j++) {
+			if (*(p + i) < *(p + j)) {
+				temp = *(p + i);
+				*(p + i) = *(p + j);
+				*(p + j) = temp;
+			}
+		}
+	} // 내림차순
+	k = *(p + N - 1);
+	return k;
+}
+int main() {
+	int M, N, arr[101], *p, *q, temp;
+	scanf("%d", &M);
+	for (p = arr; p < arr + M; p++) {
+		scanf("%d", p);
+	}
+	scanf("%d", &N);
+	temp = orderN(&arr, M, N);
+	printf("%d", temp);
+}

@@ -1,0 +1,66 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <string.h>
+struct hotel_info {
+	char name[30]; //이름
+	int grade; //등급
+	double reputation; //평판도
+	double distance; //거리
+	char breakfast; //조식 여부
+}; //구조체 선언
+int in_hotel_info(struct hotel_info* p) {
+	int i = 0, cnt = 0;
+	for (i = 0; i < 100; i++) {
+		scanf("%s", p[i].name);
+		if (strcmp(p[i].name, "0") == 0) {
+			break;
+		} //호텔 이름 "0"입력 시 입력종료
+		scanf("%d %lf %lf %c", &p[i].grade, &p[i].reputation, &p[i].distance, &p[i].breakfast); //투숙객 정보 입력
+		cnt++; //호텔 수 카운트
+	}
+	return cnt;
+} //호텔 입력함수
+void out_hotel_info(struct hotel_info* p, int N, int G, double D) {
+	int i, j, k;
+	struct hotel_info temp; //오름, 내림차수 임시변수
+	for (int i = 0; i < N; i++) {
+		for (int j = i + 1; j < N; j++) {
+			if (p[i].reputation <= p[j].reputation) {
+				temp = p[j];
+				p[j] = p[i];
+				p[i] = temp;
+			}
+		} //호텔 평판도이 큰 순서로 나열
+		for (j = 0; j < N; j++) {
+			if (strcmp(p[j + 1].name, p[j].name) > 0) {
+				temp = p[j + 1];
+				p[j + 1] = p[j];
+				p[j] = temp;
+			}
+		} //이름이 사전 순서 상 빠르게 나열
+	}
+	for (int i = 0; i < N; i++) {
+		for (int j = i + 1; j < N; j++) {
+			if (p[i].reputation <= p[j].reputation) {
+				temp = p[j];
+				p[j] = p[i];
+				p[i] = temp;
+			}
+		}
+	} //사전 순서로 나열한 호텔들을 다시 평판도 높은 순으로 나열
+	for (k = 0; k < N; k++) {
+		if (p[k].grade >= G && p[k].distance <= D) { //호텔 등급이 main에 입력한 등급보다 이상이고 main에 입력한 거리 이하인
+			printf("%s %d %.1lf %.1lf %c\n", p[k].name, p[k].grade, p[k].reputation, p[k].distance, p[k].breakfast); //호텔 정보들 출력
+			return 0; //등급과 거리에 충족한 사전 순으로 빠른 호텔 출력으로 종료
+		}
+	}
+} //평
+int main(void) {
+	struct hotel_info* p[100];
+	int hotel_cnt = 0, G;
+	double D;
+	hotel_cnt = in_hotel_info(p); //return받은 cnt저장
+	scanf("%d %lf", &G, &D); //거리와 등급입력
+	out_hotel_info(p, hotel_cnt, G, D); //조건에 충족한 평판도가 가장 높은 호텔 출력
+	return 0;
+}

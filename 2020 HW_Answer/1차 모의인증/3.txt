@@ -1,0 +1,47 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <string.h>
+void StringAdd(char arr[], char ch, int index) {
+	int len = strlen(arr);
+	arr[len + 1] = '\0';
+	for (int i = len; i >= index; i--) {
+		if (i == index) {
+			arr[i + 1] = ch;
+		}
+		else {
+			arr[i] = arr[i - 1];
+		}
+	}
+}
+int Convertor(char x) {
+	int con = 0;
+	if (x <= '9' && x >= '0') {
+			con = x - '0';
+	}
+	return con;
+}
+int main(void) {
+	char str[100] = { 0 };
+	gets(str);
+	char ch[2] = { '+', '*' };
+	int len = strlen(str);
+	int ar[100] = { 0 };
+	for (int i = 0; i <= len; i++) {
+		ar[i] = Convertor(str[i]);
+	}
+	for (int i = 0; str[i] != '\0'; i++) {
+		if (str[i + 1] == '\0') {
+			break;
+		}
+		else if (str[i] % 2 == 0 && str[i + 1] % 2 == 0) {
+			StringAdd(str, ch[1], i);
+			i++;
+		}
+		else if (str[i] % 2 != 0 && str[i + 1] % 2 != 0) {
+			StringAdd(str, ch[0], i);
+			i++;
+		}
+	}
+	puts(str);
+	return 0;
+}

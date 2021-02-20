@@ -1,0 +1,45 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+typedef struct point {
+	double x;
+	double y;
+}pt;
+
+int main() {
+	pt* p, *q;
+	int n, i, j, cnt = 0;
+	double temp, a, b;
+	p = (pt*)malloc(sizeof(pt) * 2);
+	if (p == NULL)
+		return -1;
+	for (int i = 0; i < 2; i++) {
+		scanf("%lf %lf", &p[i].x, &p[i].y);
+	}
+	for (int i = 0; i < 2; i++) {
+		if (p[0].x < p[1].x) {
+			temp = p[1].x - p[0].x;
+			temp /= 2;
+			a = p[0].x + temp;
+		}
+		else {
+			temp = p[0].x - p[1].x;
+			temp /= 2;
+			a = p[1].x + temp;
+		}
+		if (p[0].y < p[1].y) {
+			temp = p[1].y - p[0].y;
+			temp /= 2;
+			b = p[0].y + temp;
+		}
+		else {
+			temp = p[0].y - p[1].y;
+			temp /= 2;
+			b = p[1].y + temp;
+		}
+	}
+
+	printf("%.2lf %.2lf\n", a, b);
+	return 0;
+}

@@ -1,0 +1,24 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+
+struct score {
+	int score;
+};
+struct score *passfail(struct score *a, struct score *b) {
+	int minus;
+	minus = a->score - b->score;
+	return minus;
+}
+int main() {
+	struct score s1, s2, * p;
+	int n;
+	scanf("%d %d %d", &s1.score, &s2.score, &n);
+	printf("%d ", s1.score - s2.score);
+	p = passfail(&s1, &s2);
+	if (p <= n) {
+		printf("P");
+	}
+	else
+		printf("F");
+	return 0;
+}

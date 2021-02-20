@@ -1,0 +1,50 @@
+#pragma warning(disable:4996)
+#include<stdio.h>
+#include<string.h>
+
+struct parking {//입력받는 정보 저장
+	int carnum;//차번호
+	int studentid;//학번
+	char inouttime[40];//들어가는 시간과 나오는 시간은 이 문제에서  의미없으니 그냥 한번에 받기
+};
+
+int main() {
+	int i, j, k, n, cnt = 0, flag;
+	struct parking l[100], tmp;//정렬에 사용할 tmp구조체선언
+	int list[100];
+
+	scanf("%d", &n);//n입력받기
+
+	for (i = 0; i < n; i++) {
+		scanf("%d %d", &l[i].carnum, &l[i].studentid);//차번호,학번입력받기
+		gets(l[i].inouttime);//입출입시간 받아두기
+	}
+
+	for (i = 0; i < n; i++) {//학번순 정렬
+		for (j = i + 1; j < n; j++) {
+			if (l[i].studentid > l[j].studentid) {
+				tmp = l[i];
+				l[i] = l[j];
+				l[j] = tmp;
+			}
+		}
+	}
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < i; j++) {
+			if (l[i].studentid == l[j].studentid && l[i].carnum != l[j].carnum) {//학번이 같고 차번호가 다를경우에(부정이용자라면)
+				flag = 0;
+				for (k = 0; k < cnt; k++) {
+					if (list[k] == l[i].studentid) flag++;//list에 이미 있는 학번이 아니라면 flag=0
+				}
+				if (flag == 0) {
+					list[cnt++] = l[i].studentid;//list에 넣어두기
+				}
+			}
+		}
+	}
+
+	for (k = 0; k < cnt; k++) {//list 출력
+		printf("%d\n", list[k]);
+	}
+}

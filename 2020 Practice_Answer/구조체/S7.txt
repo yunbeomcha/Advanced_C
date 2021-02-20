@@ -1,0 +1,42 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+
+struct intarr {
+	int n;
+	int rank;
+};
+int main() {
+	struct intarr num[10];
+	int i, j, cnt = 0;
+	int temp, output[2];
+	for (i = 0; i < 10; i++) {
+		scanf("%d", &num[i].n);
+	}
+
+	for (i = 0; i < 10; i++) {
+		cnt = 0;
+		for (j = 0; j < 10; j++) 
+			if (num[i].n <= num[j].n) {
+				cnt++;
+			}
+			num[i].rank = cnt;
+	}
+	// 각 숫자의 등수 저장
+
+	for (i = 0, j = 0; i < 10; i++) {
+		if (num[i].rank == 3 || num[i].rank == 7) {
+				output[j++] = num[i].n;
+		}
+	}
+	// 3번째와 7번째 순위 숫자를 rank에 저장
+
+	if (output[0] < output[1]) {
+		printf("%d %d", output[1], output[0]);
+	}
+	else
+		printf("%d %d", output[0], output[1]);
+	//더 큰 수를 앞으로 출력
+
+	return 0;
+
+}

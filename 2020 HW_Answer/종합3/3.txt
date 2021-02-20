@@ -1,0 +1,63 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+int main() {
+	int n, i, j, cnt = 0, count[100] = { 0 }, len, temp, k = 0;
+	char** p, tmp[100], *tmpp;
+	gets(tmp);
+	len = strlen(tmp);
+	for (i = 0; i < len; i++) {
+		if (tmp[i] == ' ') {
+			cnt++;
+		}
+	}
+	cnt += 1;
+	p = (char**)malloc(sizeof(char*) * cnt);
+	if (p == NULL) {
+		return -1;
+	}
+	for (i = 0; i < len; i++) {
+		temp = 0;
+		while (i + temp < len && (tmp)[i + temp] != ' ') {
+			temp++;
+		}
+		p[k] = (char*)malloc(sizeof(char) * (temp + 1));
+		if (p[k] == NULL)
+			return -1;
+
+		strncpy(p[k], tmp + i, temp);
+		p[k][temp] = 0;
+		i = i + temp;
+		k++;
+	}
+	
+	for (i = 0; i < cnt; i++) {
+		for (j = 0; j < len; j++) {
+			if (p[i][j] == 'a' || p[i][j] == 'i' || p[i][j] == 'o' || p[i][j] == 'u' || p[i][j] == 'e') {
+				count[i]++;
+			}
+		}
+	}
+	for (i = 0; i < cnt; i++) {
+		for (j = i + 1; j < cnt; j++) {
+			if (count[i] < count[j]) {
+				temp = count[j];
+				count[j] = count[i];
+				count[i] = temp;
+
+				tmpp = p[j];
+				p[j] = p[i];
+				p[i] = tmpp;
+			}
+		}
+	}
+	for (i = 0; i < k; i++) {
+		printf("%s %d\n", p[i], count[i]);
+	}
+	for (int i = 0; i < cnt; i++) {
+		free(p[i]);
+	}
+	free(p);
+	return 0;
+}

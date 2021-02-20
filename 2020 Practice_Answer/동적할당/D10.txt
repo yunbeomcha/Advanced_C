@@ -1,0 +1,52 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+	int N;
+	char** p = NULL, * temp = NULL;
+	
+	char str[100][100];
+	char* max = &str[0][0];
+	scanf("%d", &N);
+	getchar();
+
+	p = (char**)malloc(N * sizeof(char*));
+
+	if (p == NULL) {
+		return -1;
+	}
+
+	for (int i = 0; i < N; i++) {
+		p[i] = (char*)malloc(101 * sizeof(char));
+	}
+	for (int i = 0; i < N; i++) {
+		gets(p[i]);
+	}
+
+
+	for (int i = 0; i < N-1; i++) {
+		for (int j = i + 1; j < N; j++) {
+			if (strlen(p[i]) < strlen(p[j])) {
+				temp = p[i];
+				p[i] = p[j];
+				p[j] = temp;
+			}
+		}
+	}
+	
+	
+	for (int i = 0; i < N; i++) {
+		printf("%s\n", p[i]);
+	}
+
+	for (int i = 0; i < N; i++) {
+		free(p[i]);
+	}
+
+	if (p != NULL) {
+		free(p);
+	}
+	return 0;
+}

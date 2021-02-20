@@ -1,0 +1,35 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <string.h>
+void sort(double avg[], int N, int id[]) {
+	int tmp, * pid = id;
+	double *p, *q, temp;
+
+	for (int i = 0; i < N; i++) {
+		for (int j = i + 1; j < N; j++) {
+			if (*(avg + i) < *(avg + j)) {
+				temp = *(avg + i);
+				*(avg + i) = *(avg + j);
+				*(avg + j) = temp;
+
+				tmp = *(pid + i);
+				*(pid + i) = *(pid + j);
+				*(pid + j) = tmp;
+			}
+		}
+	}
+	for (int i = 0; i < N; i++) {
+		printf("%d %.1lf\n", *(id + i), *(avg + i));
+	}
+}
+int main() {
+	int N, id[100], kor[100], math[100], *p1, *p2, *p3, i = 0;
+	double avg[100];
+	double *p = avg;
+	scanf("%d", &N);
+	for (p1 = id, p2 = kor, p3 = math; p1 < id + N, p2 < kor + N, p3 < math + N, p<avg+N; p1++, p2++, p3++, p++) {
+		scanf("%d %d %d", p1, p2, p3);
+		*p = (double)(*(p2) + *(p3)) / 2.0;
+	}
+	sort(avg, N, id);
+}

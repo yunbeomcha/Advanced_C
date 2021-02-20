@@ -1,0 +1,46 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+struct Date {
+	int year;
+	int month;
+	int day;
+};
+struct Date* select_min(struct Date *a, struct Date *b) {
+	if (a->year != b->year) {
+		if (a->year > b->year) {
+			return b;
+		}
+		else {
+			return a;
+		}
+	}
+	else {
+		if (a->month != b->month) {
+			if (a->month > b->month) {
+				return b;
+			}
+			else {
+				return a;
+			}
+		}
+		else {
+			if (a->day != b->day) {
+				if (a->day > b->day) {
+					return b;
+				}
+				else {
+					return a;
+				}
+			}
+		}
+	}
+}
+
+int main() {
+	struct Date date[2], *p;
+	scanf("%d/%d/%d", &date[0].year, &date[0].month, &date[0].day);
+	scanf("%d/%d/%d", &date[1].year, &date[1].month, &date[1].day);
+	p = select_min(&date[0], &date[1]);
+	printf("%d/%d/%d", p->year, p->month, p->day);
+	return 0;
+}

@@ -1,0 +1,71 @@
+#pragma warning(disable:4996)
+#include<stdio.h>
+#include<string.h>
+
+void deletespace(char str[]) {//공백 지우기
+	int i, cnt;
+	do {
+		for (i = 0, cnt = 0; i < strlen(str); i++) {
+			if (str[i] == ' ') cnt++;//공백수만큼 cnt를 세고
+			if (cnt != 0) {
+				str[i] = str[i + 1];//cnt가 0일때 까지 앞으로 당기기
+			}
+		}
+	} while (cnt != 0);//전체 배열중 공백이 없을때 까지 반복
+}
+
+
+int main() {
+	char str[101], oper[10], *tmp[10]; //최대길이 100인 문자열
+	int  i, j, cnt = 0, opercnt = 0, numcnt = 0, k = 0;
+	double num[11] = { 0 };
+
+	gets(str);//공백을 포함하는 문자열 입력받기
+
+	deletespace(str);//공백지우기
+
+	tmp[numcnt] = str;//숫자를 기호를 기준으로 tmp에 char형태로 저장. tmp의 처음값은 str의 맨앞
+	numcnt++;
+
+	for (i = 0; str[i] != '\0'; i++) {
+		if ('0' > str[i] || str[i] > '9') {//str이 숫자가 아닐경우 tmp의 다음 배열에 넣음 => 숫자가 기호를 기준으로 나뉘어져 tmp에 따로 저장
+			oper[opercnt++] = str[i];
+			str[i] = '\0';
+			tmp[numcnt++] = &str[i + 1];
+		}
+	}
+	for (i = 0; i < numcnt; i++) {//tmp에 받아놓은 char배열을 실수형 배열num에 넣기
+		num[i] = (double)atoi(tmp[i]);
+	}
+
+	for (k = 0; k <= opercnt; k++) {//*와 /인 경우 먼저해야하므로 먼저 계산
+		for (i = 0; i <= opercnt; i++) {
+			if (oper[i] == '*' || oper[i] == '/') {
+				if (oper[i] == '*') num[i] *= num[i + 1];//*일때
+				else if (oper[i] == '/') num[i] /= num[i + 1];//일때
+				for (j = i + 1; num[j] != '\0'; j++) {//num[i]에 계산의 결과(num[i] oper[i] num[i+1])를 저장하면 num[i+1]과 oper[i]는 쓸모없으니 삭제
+					num[j] = num[j + 1];//한칸씩 당기기
+				}
+				oper[i] = ' ';//oper[i]을 공백으로 바꾸어
+				deletespace(oper);//공백지우는 함수를 통해 지우기
+				break;//브레이크를 사용하여 다시 처음부터 훑게 만듬
+			}
+		}
+	}
+
+	for (k = 0; k <= opercnt; k++) {//+와- 의경우 나중에 계산
+		for (i = 0; i <= opercnt; i++) {
+			if (oper[i] == '+' || oper[i] == '-') {
+				if (oper[i] == '+') num[i] += num[i + 1];//+일때
+				else if (oper[i] == '-') num[i] -= num[i + 1];//--일떄
+				for (j = i + 1; num[j] != '\0'; j++) {
+					num[j] = num[j + 1];
+				}
+				oper[i] = ' ';//oper[i]을 공백으로 바꾸어
+				deletespace(oper);//공백지우는 함수를 통해 지우기
+				break;//브레이크를 사용하여 다시 처음부터 훑게 만듬
+			}
+		}
+	}
+	printf("%lf", num[0]);
+}
